@@ -73550,6 +73550,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function setup() {
 	createCanvas(512, 512);
+	pixelDensity(1);
 	g = createGraphics(128, 128);
 	back = createGraphics(60, 120);
 	noSmooth();
@@ -73564,7 +73565,6 @@ function setup() {
 
 	backgroun = new Back();
 	backgroun.updateBack();
-
 	current = pick7();
 
 	fill(255);
