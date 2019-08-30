@@ -73554,7 +73554,7 @@ function setup() {
 	g = createGraphics(128, 128);
 	back = createGraphics(60, 120);
 	noSmooth();
-
+	
 	T = createGraphics(6, 6);
 	L = createGraphics(6, 6);
 	J = createGraphics(6, 6);
@@ -73562,17 +73562,18 @@ function setup() {
 	S = createGraphics(6, 6);
 	Z = createGraphics(6, 6);
 	O = createGraphics(6, 6);
-
+	
 	backgroun = new Back();
 	backgroun.updateBack();
+	
 	current = pick7();
-
+	
 	fill(255);
 	noStroke();
 	textSize(20);
-
+	
 	frameRate(60);
-
+	
 	T.tint(200, 0, 200);
 	T.image(cell, 0, 0);
 	L.tint(255, 100, 0);
@@ -73587,8 +73588,8 @@ function setup() {
 	S.image(cell, 0, 0);
 	Z.tint(255, 0, 0);
 	Z.image(cell, 0, 0);
-
-	if (localStorage.getItem("high score") === undefined) {
+	
+	if(localStorage.getItem("high score") === undefined) {
 		localStorage.setItem("high score", 0);
 	}
 }
@@ -73596,29 +73597,29 @@ function setup() {
 var tempCur = {
 	x: 0,
 	y: 0
-};
+}
 
 function draw() {
-	if (score > highScore) {
+	if(score > highScore) {
 		highScore = score;
 	}
-
-	if (typeof Storage !== "undefined") {
-		if (localStorage.getItem("high score") < highScore) {
+	
+	if (typeof(Storage) !== "undefined") {
+		if(localStorage.getItem("high score") < highScore) {
 			localStorage.setItem("high score", highScore);
 		}
-		if (localStorage.getItem("high score") > highScore) {
+		if(localStorage.getItem("high score") > highScore) {
 			highScore = localStorage.getItem("high score");
 		}
 	} else {
 		// No web storage Support.
 	}
-
-	if (!song.playing) {
+	
+	if(!song.playing) {
 		song.play();
 	}
-
-	if (menu === 0) {
+	
+	if(menu === 0) {
 		background(0);
 		fill(255);
 		noStroke();
@@ -73645,83 +73646,95 @@ function draw() {
 		text("Play", 98, 265);
 		textSize(20);
 		text("Controls", 347, 262);
-
+		
 		textAlign(CENTER);
 		text("Created by: Ufuueueuru\nThis is not an official Tetris game.", 256, 480);
 		text("High Score: " + floor(highScore), 256, 400);
 		textAlign(LEFT);
-
+		
 		image(T, 219, 100, 80, 80);
 		image(T, 299, 100, 80, 80);
 		image(T, 139, 100, 80, 80);
 		image(T, 219, 180, 80, 80);
 	}
-
-	if (menu === 1) {
+	
+	if(menu === 1) {
 		image(controls, 0, 0, 512, 512);
+		stroke(255);
+		strokeWeight(2);
+		line(135, 310, 200, 440);
+		
+		noStroke();
+		
+		fill(255);
+		textSize(20);
+		textAlign(CENTER);
+		text("C\nHold", 200, 460);
+		textAlign(LEFT);
+		strokeWeight(1);
 	}
-
-	if (menu === 2) {
-
+	
+	if(menu === 2) {
+		
 		g.background(0);
-
+		
 		backgroun.drawBack();
-
-		current.draw(cur.x * 6 + 35, cur.y * 6);
-
+		
+		current.draw(cur.x*6+35, cur.y*6);
+		
 		tempCur.x = cur.x;
 		tempCur.y = cur.y;
-
-		while (!backgroun.checkWall(current, tempCur)) {
-			tempCur.y++;
+		
+		while(!backgroun.checkWall(current,tempCur)) {
+			tempCur.y ++;
 		}
-		tempCur.y--;
-		current.draw(tempCur.x * 6 + 35, tempCur.y * 6, 100);
-
+		tempCur.y --;
+		current.draw(tempCur.x*6+35, tempCur.y*6, 100);
+		
 		g.fill(0);
 		g.stroke(100);
 		g.rect(100, 10.5, 26.5, 27);
-
+		
 		fillBag();
 
-		if (bag[0] === "I") {
+		if(bag[0] === "I") {
 			tetromino.I.draw(101, 15);
 		}
-		if (bag[0] === "O") {
+		if(bag[0] === "O") {
 			tetromino.O.draw(101, 18);
 		}
-		if (bag[0] === "T") {
+		if(bag[0] === "T") {
 			tetromino.T.draw(104, 18);
 		}
-		if (bag[0] === "S") {
+		if(bag[0] === "S") {
 			tetromino.S.draw(104, 18);
 		}
-		if (bag[0] === "Z") {
+		if(bag[0] === "Z") {
 			tetromino.Z.draw(104, 18);
 		}
-		if (bag[0] === "J") {
+		if(bag[0] === "J") {
 			tetromino.J.draw(104, 18);
 		}
-		if (bag[0] === "L") {
+		if(bag[0] === "L") {
 			tetromino.L.draw(104, 18);
 		}
 
 		g.rect(6, 62.5, 26.5, 27);
 
-		if (hold !== undefined) {
+		if(hold !== undefined) {
 			var tempX = 10;
 			var tempY = 70;
-			if (hold.type === "I") {
+			if(hold.type === "I") {
 				tempX -= 3;
 				tempY -= 3;
 			}
-			if (hold.type === "O") {
+			if(hold.type === "O") {
 				tempX -= 3;
 			}
 			hold.draw(tempX, tempY);
 		}
 
-		if (held) {
+		if(held) {
 			g.fill(100, 100, 100, 150);
 			g.noStroke();
 			g.rect(6, 62.5, 26.5, 27);
@@ -73731,7 +73744,7 @@ function draw() {
 
 		fill(255);
 		textSize(20);
-		text("Level: " + min(20, floor(.75 * (31 - tps))), 0, 40);
+		text("Level: " + min(20, floor(.75*(31-tps))), 0, 40);
 		text("Combo: " + combo, 0, 70);
 		text("Score:\n" + floor(score), 0, 100);
 		text("High Score:\n" + floor(highScore), 0, 200);
@@ -73739,11 +73752,11 @@ function draw() {
 
 		fill(255, 255, 255, textSpot.a);
 		text(textSpot.text, textSpot.x, textSpot.y);
-		if (textSpot.a > 0) {
-			textSpot.a--;
+		if(textSpot.a > 0) {
+			textSpot.a --;
 		}
 
-		if (gameOver) {
+		if(gameOver) {
 			fill(0);
 			stroke(100);
 			rect(138, 156, 286, 200);
@@ -73757,7 +73770,7 @@ function draw() {
 			textAlign(LEFT);
 		}
 
-		if (paused) {
+		if(paused) {
 			fill(0);
 			stroke(100);
 			rect(138, 156, 286, 200);
@@ -73768,69 +73781,70 @@ function draw() {
 		}
 
 		//backgroun.lineCheck();
-		if (!gameOver && !paused) {
-			if (keyCode === 8) {
+		if(!gameOver && !paused) {
+			if(keyCode === 8) {
 				gameOver = true;
 			}
+			
+			ticks ++;
 
-			ticks++;
-
-			if (ticks >= tps) {
+			if(ticks >= tps) {
 				var tempTicks = ticks;
 				ticks = 0;
-				cur.y++;
+				cur.y ++;
 
-				if (!backgroun.checkWall(current, cur)) {
+				if(!backgroun.checkWall(current, cur)) {
 					lastMoveRotate = false;
 				}
 
-				if (backgroun.checkWall(current, cur)) {
-					cur.y--;
+				if(backgroun.checkWall(current, cur)) {
+					cur.y --;
 
-					if (tempTicks > 12) {
+					if(tempTicks > 12) {
 						backgroun.set(current, cur);
 						current = pick7();
 						cur.x = 3;
 						cur.y = -1;
-						if (backgroun.checkWall(current, cur)) {
+						if(backgroun.checkWall(current, cur)) {
 							gameOver = true;
 						}
 					} else {
 						ticks = tempTicks;
 					}
 				}
+
 			}
 
-			if (keyIsDown(40)) {
-				softDrop++;
-				if (softDrop % 2 === 0) {
-					cur.y++;
-					if (backgroun.check(current, cur)) {
-						if (ticks < tps * 1 / 4) {
-							ticks = tps * 1 / 4;
+			if(keyIsDown(40)) {
+				softDrop ++;
+				if(softDrop % 2 === 0) {
+					cur.y ++;
+					if(backgroun.check(current, cur)) {
+						if(ticks < tps * 1/4) {
+							ticks = tps * 1/4;
 						}
-						cur.y--;
+						cur.y --;
 					} else {
 						ticks = 0;
 						score += .2;
 					}
 				}
 			}
-			if (keyIsDown(39)) {
-				moveRight++;
-				if (max(moveRight, 7) % 2 === 0) {
-					cur.x++;
-					if (backgroun.checkWall(current, cur)) {
-						cur.x--;
+			if(keyIsDown(39)) {
+				moveRight ++;
+				if(max(moveRight, 7) % 2 === 0) {
+					cur.x ++;
+					if(backgroun.checkWall(current, cur)) {
+						cur.x --;
 					}
 				}
 			}
-			if (keyIsDown(37)) {
-				moveLeft++;
-				if (max(moveLeft, 7) % 2 === 0) {
-					cur.x--;
-					if (backgroun.checkWall(current, cur)) {
-						cur.x++;
+			if(keyIsDown(37)) {
+				moveLeft ++;
+				if(max(moveLeft, 7) % 2 === 0) {
+					cur.x --;
+					if(backgroun.checkWall(current, cur)) {
+						cur.x ++;
 					}
 				}
 			}
@@ -73839,108 +73853,108 @@ function draw() {
 }
 
 function keyPressed() {
-	if (menu === 2) {
-		if (keyCode === 80) {
-			if (paused) {
+	if(menu === 2) {
+		if(keyCode === 80) {
+			if(paused) {
 				paused = false;
 			} else {
 				paused = true;
 			}
 		}
-		if (!gameOver && !paused) {
-			if (keyCode === 67) {
-				if (!held) {
-					if (hold !== undefined) {
+		if(!gameOver && !paused) {
+			if(keyCode === 67) {
+				if(!held) {
+					if(hold !== undefined) {
 						var temp = current.rotate("O");
 						current = hold.rotate("O");
 						hold = temp.rotate("O");
-						while (hold.position !== "O") {
+						while(hold.position !== "O") {
 							hold = hold.rotate("R");
 						}
 					} else {
 						hold = current.rotate("O");
 						current = pick7();
-						while (hold.position !== "O") {
+						while(hold.position !== "O") {
 							hold = hold.rotate("R");
 						}
 					}
 					cur.x = 3;
 					cur.y = -1;
 					held = true;
-					if (backgroun.checkWall(current, cur)) {
+					if(backgroun.checkWall(current, cur)) {
 						gameOver = true;
 					}
 				}
 			}
-			if (keyCode === 40) {
+			if(keyCode === 40) {
 				softDrop = 0;
 			}
-			if (cur.y > -1 || cur.x > 1 && cur.x < 10) {
-				if (keyCode === 37) {
+			if(cur.y > -1 || (cur.x > 1 && cur.x < 10)) {
+				if(keyCode === 37) {
 					moveLeft = 0;
-					cur.x--;
-					if (backgroun.checkWall(current, cur) && cur.y > -1) {
-						cur.x++;
+					cur.x --;
+					if(backgroun.checkWall(current, cur) && cur.y > -1) {
+						cur.x ++;
 					}
 				}
-				if (keyCode === 39) {
+				if(keyCode === 39) {
 					moveRight = 0;
-					cur.x++;
-					if (backgroun.checkWall(current, cur) && cur.y > -1) {
-						cur.x--;
+					cur.x ++;
+					if(backgroun.checkWall(current, cur) && cur.y > -1) {
+						cur.x --;
 					}
 				}
 			}
-			if (keyCode === 38 || keyCode === 32) {
+			if(keyCode === 38 || keyCode === 32) {
 				lastMoveRotate = false;
 				var count = 0;
-				while (!backgroun.checkWall(current, cur)) {
-					cur.y++;
-					count++;
+				while(!backgroun.checkWall(current,cur)) {
+					cur.y ++;
+					count ++;
 				}
-				count--;
-				cur.y--;
+				count --;
+				cur.y --;
 				backgroun.set(current, cur);
 				current = pick7();
 				ticks = 0;
 				cur.x = 3;
 				cur.y = -1;
-				score += count / 4;
-				if (backgroun.checkWall(current, cur)) {
+				score += count/4;
+				if(backgroun.checkWall(current, cur)) {
 					gameOver = true;
 				}
 			}
-			if (cur.y >= -1) {
-				if (keyCode === 88 && current.type !== "O") {
+			if(cur.y >= -1) {
+				if(keyCode === 88 && current.type !== "O") {
 					current = current.rotate("R");
 					backgroun.kick(current, cur, "R");
-					cur.y++;
-					if (backgroun.check(current, cur)) {
-						if (rotated < 16) {
+					cur.y ++;
+					if(backgroun.check(current, cur)) {
+						if(rotated < 16) {
 							ticks = 0;
 						}
-						rotated++;
+						rotated ++;
 					}
-					cur.y--;
+					cur.y --;
 					lastMoveRotate = true;
 				}
-				if (keyCode === 90 && current.type !== "O") {
+				if(keyCode === 90 && current.type !== "O") {
 					current = current.rotate("L");
 					backgroun.kick(current, cur, "L");
-					cur.y++;
-					if (backgroun.check(current, cur)) {
-						if (rotated < 16) {
+					cur.y ++;
+					if(backgroun.check(current, cur)) {
+						if(rotated < 16) {
 							ticks = 0;
 						}
-						rotated++;
+						rotated ++;
 					}
-					cur.y--;
+					cur.y --;
 					lastMoveRotate = true;
 				}
 			}
 		} else {
-			if (gameOver) {
-				if (keyCode === 13) {
+			if(gameOver) {
+				if(keyCode === 13) {
 					score = 0;
 					lines = 0;
 					combo = 0;
@@ -73954,7 +73968,7 @@ function keyPressed() {
 					tps = 30;
 					hold = undefined;
 				}
-				if (keyCode === 8) {
+				if(keyCode === 8) {
 					score = 0;
 					lines = 0;
 					combo = 0;
@@ -73974,18 +73988,18 @@ function keyPressed() {
 	}
 }
 function mouseClicked() {
-	if (menu === 0) {
-		if (dist(mouseX, mouseY, 384, 256) <= 43) {
+	if(menu === 0) {
+		if(dist(mouseX, mouseY, 384, 256) <= 43) {
 			menu = 1;
 		}
-
-		if (dist(mouseX, mouseY, 128, 265) <= 43) {
+		
+		if(dist(mouseX, mouseY, 128, 265) <= 43) {
 			menu = 2;
 		}
 	}
-
-	if (menu === 1) {
-		if (mouseX > 30 && mouseX < 165 && mouseY > 30 && mouseY < 165) {
+	
+	if(menu === 1) {
+		if(mouseX > 30 && mouseX < 165 && mouseY > 30 && mouseY < 165) {
 			menu = 0;
 		}
 	}
